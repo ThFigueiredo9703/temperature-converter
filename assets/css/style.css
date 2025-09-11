@@ -1,0 +1,92 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #4b4b4b;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #4a4a4a;
+  padding: 30px;
+  border-radius: 20px;
+  color: #fff;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.75);
+  gap: 10px;
+
+  #temperature-input {
+    width: 150px;
+    padding: 2px 4px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .options-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px;
+  }
+
+  select {
+    padding: 3px;
+    border: 1px solid black;
+  }
+
+  .convert-btn {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+  }
+
+  .convert-btn:hover {
+    background-color: #d8d8d8;
+    cursor: pointer;
+  }
+}
+
+.result-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 20px;
+  color: #fff;
+  gap: 10px;
+
+  .result {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container-title {
+    text-align: center;
+  }
+
+  .options-form {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+}
+
+.disabled {
+  display: none;
+}
