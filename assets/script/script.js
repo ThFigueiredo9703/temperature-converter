@@ -5,64 +5,88 @@ const convertBtn = document.querySelector(".convert-btn");
 const resultTitle = document.querySelector(".result-title");
 const temperatureConverted = document.querySelector(".result");
 
-function convert(e) {
-  if (temperatureInput.value == "") {
+convertFrom.addEventListener("change", handleSelectChange);
+convertTo.addEventListener("change", handleSelectChange);
+temperatureInput.addEventListener("input", clearError);
+
+let defaultFromRemoved = false;
+let defaultToRemoved = false;
+
+// Limpar qualquer erro anterior
+function handleSelectChange() {
+  clearError();
+}
+
+// Restaurar o estilo padrão do título do resultado
+function clearError() {
+  temperatureConverted.innerHTML = "";
+  resultTitle.style.color = "";
+  resultTitle.classList.add("disabled");
+}
+
+function convert() {
+  // Limpar qualquer erro anterior
+  clearError();
+
+  // Verificar se os selects têm valores padrão (não selecionados)
+  if (convertFrom.value === "default" || convertTo.value === "default") {
+    resultTitle.classList.remove("disabled");
+    resultTitle.style.color = "red";
+    resultTitle.innerHTML = "Error: Please select both 'From' and 'To' units";
+    return;
+  }
+
+  if (temperatureInput.value === "") {
+    resultTitle.classList.remove("disabled");
+    resultTitle.style.color = "red";
+    resultTitle.innerHTML = "Error: Please enter a temperature value";
     return;
   }
 
   if (convertFrom.value == "c") {
+    if (convertTo.value == "c") {
+      resultTitle.classList.remove("disabled");
+      resultTitle.style.color = "red";
+      resultTitle.innerHTML =
+        "Error: you can't convert from Celsius to Celsius";
+      return;
+    }
     if (convertTo.value == "f") {
-      return (temperatureConverted.innerHTML += convertCtoF(
-        temperatureInput.value + " F"
-      ));
-    } else if (convertTo.value == "k") {
-      return convertCtoK(temperatureInput.value);
+      resultTitle.classList.remove("disabled");
+      resultTitle.innerHTML = "Result:";
+      temperatureConverted.innerHTML = `${convertCtoF(
+        temperatureInput.value
+      )} °F`;
+      return;
     }
   }
 
   if (convertFrom.value == "f") {
-    if (convertTo.value == "c") {
-      return convertFtoC(temperatureInput.value);
-    } else if (convertTo.value == "k") {
-      return convertFtoK(temperatureInput.value);
+    if (convertTo.value == "f") {
+      resultTitle.classList.remove("disabled");
+      resultTitle.style.color = "red";
+      resultTitle.innerHTML =
+        "Error: you can't convert from Fahrenheit to Fahrenheit";
+      return;
     }
-  }
 
-  if (convertFrom.value == "k") {
     if (convertTo.value == "c") {
-      return convertKtoC(temperatureInput.value);
-    } else if (convertTo.value == "f") {
-      return convertKtoF(temperatureInput.value);
+      resultTitle.classList.remove("disabled");
+      resultTitle.innerHTML = "Result:";
+      temperatureConverted.innerHTML = `${convertFtoC(
+        temperatureInput.value
+      )} °C`;
+      return;
     }
   }
 }
 
 function convertCtoF() {
   let result = temperatureInput.value * 1.8 + 32;
-  return result;
-}
-
-function convertCtoK() {
-  let result = temperatureInput.value + 273.15;
-  return result;
-}
-
-function convertKtoC() {
-  let result = temperatureInput.value - 273.15;
-  return result;
-}
-
-function convertKtoF() {
-  let result = temperatureInput.value * 1.8 - 459.67;
-  return result;
-}
-
-function convertFtoK() {
-  let result = (temperatureInput.value - 32) * 1.8 + 273.15;
-  return result;
+  return result.toFixed(2);
 }
 
 function convertFtoC() {
-  let result = 1.8 * temperatureInput.value - 32;
-  return result;
+  let result = (temperatureInput.value - 32) / 1.8;
+  return result.toFixed(2);
 }
